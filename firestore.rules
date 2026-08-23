@@ -1,0 +1,22 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Only signed-in users may read/write, and only the case's creator
+    // can access it. Since this is a small trusted circle rather than a
+    // multi-tenant product, "creator-only" is the simplest safe default;
+    // see README for how to extend this to a shared-firm model.
+
+    match /cases/{caseId} {
+      allow read, update, delete: if request.auth != null
+        && request.auth.uid == resource.data.createdBy;
+      allow create: if request.auth != null
+        && request.auth.uid == request.resource.data.createdBy;
+
+      match /{subcollection=**} {
+        allow read, write: if request.auth != null
+          && request.auth.uid == get(/databases/$(database)/documents/cases/$(caseId)).data.createdBy;
+      }
+    }
+  }
+}

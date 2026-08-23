@@ -1,0 +1,9 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /cases/{caseId}/documents/{fileName} {
+      allow read, write: if request.auth != null
+        && firestore.get(/databases/(default)/documents/cases/$(caseId)).data.createdBy == request.auth.uid;
+    }
+  }
+}
