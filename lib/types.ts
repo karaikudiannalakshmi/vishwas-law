@@ -1,4 +1,9 @@
-export type CaseType = "civil" | "criminal" | "constitutional";
+export type CaseType =
+  | "civil"
+  | "criminal"
+  | "constitutional"
+  | "income-tax-appeal"
+  | "other-tribunal-appeal";
 
 export type OurSide =
   | "petitioner"
@@ -69,4 +74,24 @@ export interface Draft {
   createdBy: string;
   createdAt: number;
   reviewed: boolean;
+}
+
+// A brief prepared for a brand-new matter, before any case record exists.
+// No court/parties/case-number metadata is required - just facts and the
+// legal questions to address. Can optionally be promoted into a tracked
+// Case later (see promoteBriefToCase in lib/briefs.ts).
+export interface QuickBrief {
+  id: string;
+  matterTitle: string;
+  caseType: CaseType;
+  facts: string;
+  legalQueries: string;
+  ourArguments: string;
+  reliefsSought: string;
+  citations: Citation[];
+  content: string;
+  createdBy: string;
+  createdAt: number;
+  reviewed: boolean;
+  promotedToCaseId?: string;
 }

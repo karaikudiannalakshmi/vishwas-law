@@ -18,5 +18,13 @@ service cloud.firestore {
           && request.auth.uid == get(/databases/$(database)/documents/cases/$(caseId)).data.createdBy;
       }
     }
+
+    // Quick briefs for brand-new matters that don't have a case record yet.
+    match /briefs/{briefId} {
+      allow read, update, delete: if request.auth != null
+        && request.auth.uid == resource.data.createdBy;
+      allow create: if request.auth != null
+        && request.auth.uid == request.resource.data.createdBy;
+    }
   }
 }

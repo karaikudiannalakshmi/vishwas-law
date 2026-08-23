@@ -7,7 +7,13 @@ import { useAuth } from "@/lib/AuthContext";
 import { createCase } from "@/lib/cases";
 import { CaseType, OurSide } from "@/lib/types";
 
-const CASE_TYPES: CaseType[] = ["civil", "criminal", "constitutional"];
+const CASE_TYPES: { value: CaseType; label: string }[] = [
+  { value: "civil", label: "Civil" },
+  { value: "criminal", label: "Criminal" },
+  { value: "constitutional", label: "Constitutional / Writ" },
+  { value: "income-tax-appeal", label: "Income Tax Appeal" },
+  { value: "other-tribunal-appeal", label: "Other Tribunal Appeal" },
+];
 const SIDES: OurSide[] = [
   "petitioner",
   "respondent",
@@ -73,8 +79,8 @@ function NewCaseInner() {
               className="input"
             >
               {CASE_TYPES.map((t) => (
-                <option key={t} value={t}>
-                  {t}
+                <option key={t.value} value={t.value}>
+                  {t.label}
                 </option>
               ))}
             </select>
