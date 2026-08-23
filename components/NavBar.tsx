@@ -19,7 +19,7 @@ export default function NavBar() {
                 <Link href="/dashboard" className="text-slate-600 hover:text-slate-900">
                   Cases
                 </Link>
-                <span className="text-slate-400">{user.email}</span>
+                <span className="text-slate-400">{user.displayName || user.email}</span>
                 <button
                   onClick={() => logout()}
                   className="rounded-md border border-slate-300 px-3 py-1.5 text-slate-700 hover:bg-slate-100"
