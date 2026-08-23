@@ -20,6 +20,13 @@ to be self-hosted (free tier) by you and used by people you invite, not sold.
 - **Private by default** — sign-in required (Firebase Auth); each account
   only sees cases it created. See "Sharing cases with your friends" below
   if you want a firm-wide shared view instead.
+- **Self-serve signup with email confirmation** — anyone can create their
+  own account (name, email, password) on the `/login` page, but the app
+  won't show them any case data until they click the confirmation link
+  Firebase emails them. No extra service or config needed — Firebase Auth
+  sends this automatically. If you want to customise the email's wording
+  or sender name, go to **Authentication → Templates → Email address
+  verification** in the Firebase console.
 
 ## 1. Prerequisites
 
