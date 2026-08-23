@@ -54,11 +54,20 @@ to be self-hosted (free tier) by you and used by people you invite, not sold.
    npm install -g firebase-tools
    firebase login
    firebase init firestore storage   # point at the existing project; keep default rule file names, or point at firestore.rules / storage.rules in this repo
-   firebase deploy --only firestore:rules,storage:rules
+   firebase deploy --only firestore:rules,storage:rules,firestore:indexes
    ```
    (If you'd rather do this by hand: paste the contents of `firestore.rules`
    into Firestore → Rules in the console, and `storage.rules` into
    Storage → Rules, then Publish.)
+
+   The app also needs one composite index (cases queried by `createdBy` +
+   sorted by `updatedAt`), defined in `firestore.indexes.json`. The
+   `firebase deploy` command above creates it for you. If you skip this and
+   just run the app, Firestore will show a "query requires an index" error
+   in the browser console the first time you load the dashboard — that
+   error includes a direct link to create the same index by hand in the
+   Firebase console; click it, click **Create Index**, and wait a minute
+   or two for it to finish building.
 
 ## 3. Get an Indian Kanoon API key
 
